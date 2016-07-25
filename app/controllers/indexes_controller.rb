@@ -1,3 +1,3 @@
 get '/' do
-  redirect '/home'
+  erb :index
 end
