@@ -5,3 +5,19 @@ $(document).ready(function() {
 
   // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
 });
+
+
+$('#search').on('click', function(event){
+  event.preventDefault();
+  console.log(event);
+  var searchData = $('.search-form').serialize()
+  console.log(searchData);
+  $.ajax({
+    url: '/search'
+    method: '/post'
+    data: searchData
+  })
+  .done(function(searchData){
+    
+  })
+})
