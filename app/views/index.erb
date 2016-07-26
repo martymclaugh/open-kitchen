@@ -93,8 +93,5 @@
     </div>
   </div>
 </div>
-<p><%= @login_error if @login_error %></p>
-<% if @login_error %>
-  <%= @login_error %>
-<% end %>3
-<p><%= @register_error if @register_error %></p>
+<p style="color:red;"><%= @login_error if @login_error %></p>
+<p style="color:red;"><%= @register_error if @register_error %></p>
