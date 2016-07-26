@@ -13,11 +13,18 @@ $('#search').on('click', function(event){
   var searchData = $('.search-form').serialize()
   console.log(searchData);
   $.ajax({
-    url: '/search'
-    method: '/post'
+    url: '/search',
+    method: 'POST',
     data: searchData
   })
-  .done(function(searchData){
-    
+  .done(function(response){
+    // console.log(response.businesses[0]);
+    // console.log(response.businesses.length);
+      $('#name').empty().append(response.businesses[0].name)
+      $('#address').empty().append(response.businesses[0].location.display_address[0])
+      $('#city').empty().append(response.businesses[0].location.display_address[1])
+      $('#zip').empty().append(response.businesses[0].location.display_address[2])
+      $('#image').empty().append().attr('src', response.businesses[0].image_url).attr('alt', response.businesses[0].name )
+      // $('#search-results').append(response.businesses.address)
   })
 })
