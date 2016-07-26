@@ -66,11 +66,26 @@
 <body>
   <div id="search-results">
     <img id="image" src="" alt="">
+    <p id="yelp-reviews"></p>
+    <img id="review-image" src="" alt="">
     <h3 id="name"></h3>
+    <i><p id="phone"></p></i>
     <p id="address"></p>
     <p id="city"></p>
-    <p id="zip"></p>
+    <p id="state"></p>
+    <i><p id="snippet"></p></i>
   </div>
+
+  <form id="create-comment" action="/restaurants/new" method="POST">
+    <input type="text" name="restaurant-name">
+    <input type="text" name="phone">
+    <input type="text" name="address">
+    <input type="text" name="city">
+    <input type="text" name="state">
+    <input type="text" name="yelp-reviews">
+    <button type="submit" class="btn btn-default">Create Comment</button>
+  </form>
+
   <%= yield %>
 </body>
 </html>
