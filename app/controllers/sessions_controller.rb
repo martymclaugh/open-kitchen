@@ -21,11 +21,10 @@ post '/login' do
 
   if user
     login(user)
-    p current_user
     redirect '/'
   else
     @login_error = "*Wrong username or password"
     @login_error
-    erb :index
+    redirect '/'
   end
 end

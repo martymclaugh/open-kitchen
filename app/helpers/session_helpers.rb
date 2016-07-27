@@ -1,6 +1,6 @@
 helpers do
   def logged_in?
-    p session[:id].present?
+    session[:id].present?
   end
 
   def login(user)
