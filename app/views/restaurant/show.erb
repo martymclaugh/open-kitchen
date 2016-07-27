@@ -1,0 +1,57 @@
+<h3><%= @restaurant.restaurant_name %></h3>
+<p><%= @restaurant.phone %></p>
+<p><%= @restaurant.address %></p>
+<p><%= @restaurant.city %></p>
+<p><%= @restaurant.state %></p>
+<p><%= @restaurant.yelp_reviews %></p>
+
+ <a id="review-link" href="#" data-toggle="modal" data-target="#reviewModal" class="btn btn-primary btn-md"> Leave a Review </a>
+<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Post a Review</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form" method="post" action="/restaurants/:id/reviews">
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="title">Title:</label>
+            <div class="col-sm-10">
+              <input class="form-control" type="text" name="title" placeholder="Enter Title">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">Review:</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" type="text" name="content" placeholder="Enter Review"></textarea>
+            </div>
+          </div>
+          <label class="radio-inline"><input type="radio" name="employee">Employee</label>
+          <label class="radio-inline"><input type="radio" name="customer">Customer</label>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-primary btn-lg"> Post </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h4> Reviews: </h4>
+
+<ul class="nav nav-tabs nav-justified">
+  <li><a href="/restaurants/<%=@restaurant.id%>/employees" id="employee-review-link">Employees</a></li>
+  <li><a href="/restaurants/<%=@restaurant.id%>/customers" id="customer-review-link">Customers</a></li>
+</ul>
+
+<div id="employee-reviews">
+  <h2>Employee Reviews:</h2>
+    <% @restaurant.reviews.each do |review| %>
+      <%= review.title %>
+      <%= review.content %>
+      <i><%= User.find(review.user_id).username %><% review.created_at %></i>
+    <% end %>
+</div>

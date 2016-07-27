@@ -1,0 +1,26 @@
+
+  <div id="search-results">
+    <img id="image" src="" alt="">
+    <p id="yelp_reviews"></p>
+    <img id="review-image" src="" alt="">
+    <h3 id="restaurant_name"></h3>
+    <i><p id="phone"></p></i>
+    <p id="address"></p>
+    <p id="city"></p>
+    <p id="state"></p>
+    <i><p id="snippet"></p></i>
+  </div>
+
+  <form id="create-restaurant" action="/restaurants" method="POST">
+    <input type="hidden" name="restaurant_name">
+    <input type="hidden" name="phone">
+    <input type="hidden" name="address">
+    <input type="hidden" name="city">
+    <input type="hidden" name="state">
+    <input type="hidden" name="yelp_reviews">
+    <button type="submit" id="search-button"class="btn btn-default">Create Restaurant Profile</button>
+  </form>
+
+  <!-- <% if @restaurant %>
+  <button href="/restaurant/:id"class="btn btn-default"> View Restaurant Profile </button>
+  <% end %> -->
