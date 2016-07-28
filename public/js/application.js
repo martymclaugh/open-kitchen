@@ -7,6 +7,10 @@ $(document).ready(function() {
   searchBar();
   displayCustomerReviews();
   displayEmployeeReviews();
+  showReviewForm();
+  submitReview();
+  autoButtonDown();
+  cancelReview();
   // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
 });
 // preform search function
@@ -43,11 +47,9 @@ addSearchDivs = function(){
       method: 'GET',
     })
     .done(function(response){
-      console.log("ding!");
       $('body').append().html(response)
     })
     .fail(function(response){
-      console.log('oops');
     });
   });
 };
@@ -63,14 +65,12 @@ createRestaurant = function(){
     $("input[name='state']").val($('#state').html()),
     $("input[name='yelp_reviews']").val($('#yelp_reviews').html())
     var formData = $('#create-restaurant').serialize();
-    console.log(formData);
     $.ajax({
       url: '/restaurants',
       method: 'POST',
       data: formData
       })
     .done(function(response){
-      console.log("lalalala");
       $('#search-results').empty();
       $('#create-restaurant').empty();
       $('body').append(response);
@@ -81,12 +81,50 @@ createRestaurant = function(){
 displayCustomerReviews = function(){
   $('#customer-review-link').on('click', function(event){
     event.preventDefault();
+    $('#employee-reviews').hide();
+    $('#customer-reviews').show();
   })
 }
 
 displayEmployeeReviews = function(){
   $('#employee-review-link').on('click', function(event){
     event.preventDefault();
-    console.log(event);
+    $('#customer-reviews').hide();
+    $('#employee-reviews').show();
+    })
+}
+
+showReviewForm = function(){
+  $('#review-link').on('click', function(event){
+    event.preventDefault();
+    $('#review-form-div').show();
+    $('#review-link').hide();
   })
+}
+
+submitReview = function(){
+  $('#submit-review').on('click', function(event){
+    event.preventDefault();
+  var formData = $('#review-form').serialize();
+  $.ajax({
+    url: '/restaurants/:id/reviews/',
+    method: 'POST',
+    data: formData
+  })
+  .done(function(response){
+    $('#review-form-div').hide();
+    $('#review-link').show();
+  })
+  })
+}
+
+cancelReview = function(){
+  $('#cancel-review').on('click', function(event){
+    event.preventDefault();
+  $('#review-form-div').hide();
+  $('#review-link').show();
+  })
+}
+autoButtonDown = function() {
+    $('#employee-review-link').click();
 }
