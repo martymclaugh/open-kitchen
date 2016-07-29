@@ -2,6 +2,8 @@ $(document).ready(function() {
   addSearchDivs();
   createRestaurant();
   searchBar();
+  showProfile();
+
 });
 // preform search function
 searchBar = function(){
@@ -34,9 +36,10 @@ addSearchDivs = function(){
     event.preventDefault();
     $.ajax({
       url: '/search',
-      method: 'GET',
+      method: 'GET'
     })
     .done(function(response){
+      console.log("ding!");
       $('body').append().html(response)
     })
   });
@@ -75,6 +78,7 @@ displayCustomerReviews = function(){
     event.preventDefault();
     $('#employee-reviews').hide();
     $('#customer-reviews').show();
+    showProfile();
   })
 }
 
@@ -83,6 +87,7 @@ displayEmployeeReviews = function(){
     event.preventDefault();
     $('#customer-reviews').hide();
     $('#employee-reviews').show();
+    showProfile();
     })
 }
 
@@ -125,4 +130,22 @@ cancelReview = function(){
 
 autoButtonDown = function() {
     $('#employee-review-link').click();
+}
+
+showProfile = function() {
+  $('.profile-link').on('click', function(event){
+    event.preventDefault();
+    console.log(event);
+    var formData = $('.profile-form').serialize();
+    console.log(formData);
+    $.ajax({
+      url: '/users/:user_id',
+      method: 'post',
+      data: formData
+    })
+    .done(function(response){
+      // $('body').empty();
+      $('body').append().html(response)
+    })
+  })
 }

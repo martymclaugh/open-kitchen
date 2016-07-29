@@ -9,6 +9,19 @@ get '/profile' do
 end
 
 get '/users/:user_id' do
+  p "*" *500
 	@user = User.find(params[:user_id])
-	erb :'users/index'
+  # if request.xhr?
+	   erb :'users/_index'
+  # end
+end
+
+post '/users/:user_id' do
+  p params
+  p "*" *500
+  @user = User.find(params[:user_id])
+ p @user
+    if request.xhr?
+      erb :"users/_index",{ layout: false, locals: { user: @review }}
+    end
 end
