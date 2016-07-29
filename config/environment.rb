@@ -17,12 +17,12 @@ require 'logger'
 require 'sinatra'
 require "sinatra/reloader" if development?
 
+require 'yelp'
 require 'erb'
 require 'bcrypt'
-require 'dotenv'
-Dotenv.load
-require 'yelp'
-require 'pry'
+require 'dotenv' if development?
+Dotenv.load if development?
+require 'pry'if development?
 
 # Some helper constants for path-centric logic
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
