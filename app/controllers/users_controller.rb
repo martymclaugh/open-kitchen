@@ -18,10 +18,7 @@ get '/users/:id' do
 end
 
 post '/users/:id' do
-  p params
-  p "*" *500
   @user = User.find(params[:user_id])
- p @user
     if request.xhr?
       erb :"users/_index"
     end

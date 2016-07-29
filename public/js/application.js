@@ -3,6 +3,7 @@ $(document).ready(function() {
   createRestaurant();
   searchBar();
   showProfile();
+  showRestaurantProfile();
 
 });
 // preform search function
@@ -155,6 +156,24 @@ showProfile = function() {
     console.log(formData);
     $.ajax({
       url: '/users/1',
+      method: 'POST',
+      data: formData
+    })
+    .done(function(response){
+      $('body').empty();
+      $('body').append().html(response)
+    })
+  })
+}
+
+showRestaurantProfile = function() {
+  $('.restauant-link').on('click', function(event){
+    event.preventDefault();
+    console.log(event);
+    var formData = $(this).serialize();
+    console.log(formData);
+    $.ajax({
+      url: '/restaurants/1',
       method: 'POST',
       data: formData
     })

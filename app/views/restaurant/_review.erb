@@ -6,7 +6,11 @@
             <article class="row">
               <div class="col-md-2 col-sm-2 hidden-xs">
                 <figure class="thumbnail">
-                  <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                  <% if @review.user_id == current_user.id %>
+                    <img class="img-responsive" src="https://s32.postimg.org/ixy8iw4np/IMG_3112.jpg" />
+                  <%else%>
+                    <img style="width:25%;height:25%;"src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg">
+                    <%end%>
                   <figcaption class="text-center"><%= User.find(@review.user_id).username %></figcaption>
                 </figure>
               </div>

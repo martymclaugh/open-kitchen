@@ -13,9 +13,16 @@ get '/restaurants/:id' do
   erb :"restaurant/show"
 end
 
-get '/restaurants/:id/customers' do
+post '/restaurants/:id' do
+  p "*" * 300
   p params
-  p "*" * 100
+  @restaurant = Restaurant.find(params[:id])
+    if request.xhr?
+      erb :"restaurants/show"
+    end
+end
+
+get '/restaurants/:id/customers' do
   @restaurant = Restaurant.find(params[:restaurant_id])
   if request.xhr?
     erb :"restaurant/customer_comments", layout: false
@@ -23,8 +30,6 @@ get '/restaurants/:id/customers' do
 end
 
 get '/restaurants/:id/employees' do
-  p params
-  p "*" * 100
   @restaurant = Restaurant.find(params[:restaurant_id])
   if request.xhr?
     erb :"restaurant/employee_comments", layout: false
@@ -33,8 +38,6 @@ end
 
 post '/restaurants/:id/reviews/' do
   @restaurant = Restaurant.find(params[:restaurant_id])
-  p params
-  p "*" *300
   @review = Review.new(user_id: current_user.id, restaurant_id: params[:restaurant_id], title: params[:title], content: params[:content], value: params[:value])
   if @review.save
     @review
