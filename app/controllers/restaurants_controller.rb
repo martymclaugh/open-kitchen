@@ -14,8 +14,6 @@ get '/restaurants/:id' do
 end
 
 post '/restaurants/:id' do
-  p "*" * 300
-  p params
   @restaurant = Restaurant.find(params[:id])
     if request.xhr?
       erb :"restaurants/show"
