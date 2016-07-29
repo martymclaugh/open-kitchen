@@ -1,17 +1,10 @@
 $(document).ready(function() {
-  // This is called after the document has loaded in its entirety
-  // This guarantees that any elements we bind to will exist on the page
-  // when we try to bind to them
   addSearchDivs();
   createRestaurant();
   searchBar();
-  displayCustomerReviews();
-  displayEmployeeReviews();
-  showReviewForm();
-  submitReview();
-  autoButtonDown();
-  cancelReview();
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+  showProfile();
+  showRestaurantProfile();
+
 });
 // preform search function
 searchBar = function(){
@@ -44,13 +37,11 @@ addSearchDivs = function(){
     event.preventDefault();
     $.ajax({
       url: '/search',
-      method: 'GET',
+      method: 'GET'
     })
     .done(function(response){
       $('body').append().html(response)
     })
-    .fail(function(response){
-    });
   });
 };
 
@@ -74,6 +65,10 @@ createRestaurant = function(){
       $('#search-results').empty();
       $('#create-restaurant').empty();
       $('body').append(response);
+      autoButtonDown();
+      displayCustomerReviews();
+      displayEmployeeReviews();
+      showReviewForm();
     })
   })
 };
@@ -83,6 +78,7 @@ displayCustomerReviews = function(){
     event.preventDefault();
     $('#employee-reviews').hide();
     $('#customer-reviews').show();
+    showProfile();
   })
 }
 
@@ -91,6 +87,7 @@ displayEmployeeReviews = function(){
     event.preventDefault();
     $('#customer-reviews').hide();
     $('#employee-reviews').show();
+    showProfile();
     })
 }
 
@@ -98,7 +95,10 @@ showReviewForm = function(){
   $('#review-link').on('click', function(event){
     event.preventDefault();
     $('#review-form-div').show();
+    $('#review-form')[0].reset();
     $('#review-link').hide();
+    cancelReview();
+    submitReview();
   })
 }
 
@@ -114,6 +114,8 @@ submitReview = function(){
   .done(function(response){
     $('#review-form-div').hide();
     $('#review-link').show();
+    console.log(response);
+    $('#review-area').prepend(response);
   })
   })
 }
@@ -125,6 +127,59 @@ cancelReview = function(){
   $('#review-link').show();
   })
 }
+
 autoButtonDown = function() {
     $('#employee-review-link').click();
+}
+
+showProfile = function() {
+  $('.profile-link').on('click', function(event){
+    event.preventDefault();
+    console.log(event);
+    $.ajax({
+      url: '/users/1',
+      method: 'GET',
+    })
+    .done(function(response){
+      $('body').empty();
+      $('body').append().html(response)
+    })
+  })
+}
+
+
+showProfile = function() {
+  $('.profile-link').on('click', function(event){
+    event.preventDefault();
+    console.log(event);
+    var formData = $(this).serialize();
+    console.log(formData);
+    $.ajax({
+      url: '/users/1',
+      method: 'POST',
+      data: formData
+    })
+    .done(function(response){
+      $('body').empty();
+      $('body').append().html(response)
+    })
+  })
+}
+
+showRestaurantProfile = function() {
+  $('.restauant-link').on('click', function(event){
+    event.preventDefault();
+    console.log(event);
+    var formData = $(this).serialize();
+    console.log(formData);
+    $.ajax({
+      url: '/restaurants/1',
+      method: 'POST',
+      data: formData
+    })
+    .done(function(response){
+      $('body').empty();
+      $('body').append().html(response)
+    })
+  })
 }

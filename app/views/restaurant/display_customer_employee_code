@@ -1,0 +1,24 @@
+
+<div id="review-area">
+  <div id="employee-reviews" style="display: none;">
+    <div id="employee-reviews">
+        <% @restaurant.reviews.each do |review| %>
+          <% if review.value == 'employee' %>
+            <%= review.title %>
+            <%= review.content %>
+            <i><%= User.find(review.user_id).username %> <%=review.created_at%></i>
+          <% end %>
+        <% end %>
+    </div>
+
+    <div id="customer-reviews" style="display: none;">
+      <% @restaurant.reviews.each do |review| %>
+        <% if review.value == 'customer' %>
+          <%= review.title %>
+          <%= review.content %>
+          <i><%= User.find(review.user_id).username %> <%=review.created_at%></i>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

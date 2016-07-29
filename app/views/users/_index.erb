@@ -1,0 +1,72 @@
+<div id="user-profile">
+
+<% if @user.id == current_user.id %>
+<h1>Welcome <%= @user.username%>!</h1>
+<% else %>
+<h1><%= @user.username%>'s Profile</h1>
+<% end %>
+<% if @user == current_user %>
+  <img class="img-responsive" style="width:35%; height:35%;" src="https://s32.postimg.org/ixy8iw4np/IMG_3112.jpg" />
+<%else%>
+  <img style="width:25%;height:25%;"src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg">
+  <%end%>
+
+<h2> Recent Reviews </h1>
+
+<% @user.reviews.order('created_at DESC').each do |review| %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+            <section class="comment-list">
+              <article class="row">
+                <div class="col-md-2 col-sm-2 hidden-xs">
+                  <figure class="thumbnail">
+                    <% if @user == current_user %>
+                      <img class="img-responsive"  src="https://s32.postimg.org/ixy8iw4np/IMG_3112.jpg" />
+                    <%else%>
+                      <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                    <%end%>
+                    <figcaption class="text-center">
+                      <form class="profile-link" method="post" action="/users/<%=@user.id%>">
+                      <button class="profile-link" href="/users/<%=@user.id%>"><%= User.find(review.user_id).username %></button>
+                      <input type="hidden" name="user_id" value=<%= @user.id %>>
+                    </form>
+                    </figcaption>
+                  </figure>
+                </div>
+                <div class="col-md-10 col-sm-10">
+                  <div class="panel panel-default arrow left">
+                    <div class="panel-body">
+                      <header class="text-left">
+                        <div class="comment-user profile-link"><form class="profile-link" method="post" action="/users/<%=@user.id%>">
+                        <button class="profile-link" href="/users/<%=@user.id%>"><%= User.find(review.user_id).username %></button>
+                        <input type="hidden" name="user_id" value=<%= @user.id %>>
+                        </form></div>
+                        <div>Restaurant:
+                          <form class="restauants-link" method="post" action="/restaurants/<%=review.restaurant_id%>">
+                          <button class="profile-link" href="/restaurants/<%=review.restaurant_id%>"><%= Restaurant.find(review.restaurant_id).restaurant_name %></button>
+                          <input type="hidden" name="restaurant_id" value=<%= review.restaurant_id %>>
+                          </form>
+                          </div>
+                        <div >As: <%= review.value %></div>
+                        <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"><%=review.created_at%></i></time>
+                      </header>
+                      <div class="comment-post">
+                        <b>
+                          <%= review.title %>
+                        </b>
+                        <br>
+                        <p>
+                          <%= review.content %>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </section>
+        </div>
+      </div>
+    </div>
+<% end %>
+</div>

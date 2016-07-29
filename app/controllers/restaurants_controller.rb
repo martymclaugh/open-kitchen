@@ -1,5 +1,8 @@
 post '/restaurants' do
-  @restaurant = Restaurant.find_or_create_by(address: params[:address])
+  @restaurant = Restaurant.find_by(address: params[:address])
+  unless @restaurant
+    @restaurant = Restaurant.create(params)
+  end
   if request.xhr?
     erb :"restaurant/show", layout: false
   end
@@ -10,9 +13,14 @@ get '/restaurants/:id' do
   erb :"restaurant/show"
 end
 
+post '/restaurants/:id' do
+  @restaurant = Restaurant.find(params[:id])
+    if request.xhr?
+      erb :"restaurants/show"
+    end
+end
+
 get '/restaurants/:id/customers' do
-  p params
-  p "*" * 100
   @restaurant = Restaurant.find(params[:restaurant_id])
   if request.xhr?
     erb :"restaurant/customer_comments", layout: false
@@ -20,8 +28,6 @@ get '/restaurants/:id/customers' do
 end
 
 get '/restaurants/:id/employees' do
-  p params
-  p "*" * 100
   @restaurant = Restaurant.find(params[:restaurant_id])
   if request.xhr?
     erb :"restaurant/employee_comments", layout: false
@@ -29,14 +35,12 @@ get '/restaurants/:id/employees' do
 end
 
 post '/restaurants/:id/reviews/' do
-  p "it out"
-  p current_user
-  p params
   @restaurant = Restaurant.find(params[:restaurant_id])
-  @review = Review.create(user_id: current_user.id, restaurant_id: params[:restaurant_id], title: params[:title], content: params[:content], value: params[:value])
+  @review = Review.new(user_id: current_user.id, restaurant_id: params[:restaurant_id], title: params[:title], content: params[:content], value: params[:value])
   if @review.save
+    @review
     if request.xhr?
-      erb :"restaurant/show",{ layout: false, locals: { review: @review }}
+      erb :"restaurant/_review",{ layout: false, locals: { review: @review }}
     end
   end
 end

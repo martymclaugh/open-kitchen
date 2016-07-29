@@ -7,7 +7,7 @@ class CreateRestaurants < ActiveRecord::Migration
       t.string :city
       t.string :state
       t.string :yelp_reviews
-      t.timestamps
+      t.timestamps null: false
     end
     add_index :restaurants, [:restaurant_name, :address], unique: true
   end
