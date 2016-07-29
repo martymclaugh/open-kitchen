@@ -39,7 +39,6 @@ addSearchDivs = function(){
       method: 'GET'
     })
     .done(function(response){
-      console.log("ding!");
       $('body').append().html(response)
     })
   });
@@ -65,10 +64,10 @@ createRestaurant = function(){
       $('#search-results').empty();
       $('#create-restaurant').empty();
       $('body').append(response);
+      autoButtonDown();
       displayCustomerReviews();
       displayEmployeeReviews();
       showReviewForm();
-      autoButtonDown();
     })
   })
 };
@@ -136,15 +135,31 @@ showProfile = function() {
   $('.profile-link').on('click', function(event){
     event.preventDefault();
     console.log(event);
-    var formData = $('.profile-form').serialize();
+    $.ajax({
+      url: '/users/1',
+      method: 'GET',
+    })
+    .done(function(response){
+      $('body').empty();
+      $('body').append().html(response)
+    })
+  })
+}
+
+
+showProfile = function() {
+  $('.profile-link').on('click', function(event){
+    event.preventDefault();
+    console.log(event);
+    var formData = $(this).serialize();
     console.log(formData);
     $.ajax({
-      url: '/users/:user_id',
-      method: 'post',
+      url: '/users/1',
+      method: 'POST',
       data: formData
     })
     .done(function(response){
-      // $('body').empty();
+      $('body').empty();
       $('body').append().html(response)
     })
   })

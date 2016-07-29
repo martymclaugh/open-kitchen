@@ -62,7 +62,10 @@
                       <figure class="thumbnail">
                         <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
                         <figcaption class="text-center">
-                          <a class="profile-link" href="/users/'<%=review.user_id%>'"><%= User.find(review.user_id).username %></a>
+                          <form class="profile-link" method="post" action="/users/<%=review.user_id%>">
+                          <button class="profile-link" href="/users/<%=review.user_id%>"><%= User.find(review.user_id).username %></button>
+                          <input type="hidden" name="user_id" value=<%= review.user_id %>>
+                        </form>
                           </figcaption>
                       </figure>
                     </div>
@@ -70,7 +73,11 @@
                       <div class="panel panel-default arrow left">
                         <div class="panel-body">
                           <header class="text-left">
-                            <div class="comment-user profile-link"><i class="fa fa-user"></i> <a href="/users/<%=review.user_id%>"><%= User.find(review.user_id).username %></a></div>
+                            <div class="comment-user profile-link"><i class="fa fa-user"></i>
+                              <form class="profile-link" method="post" action="/users/<%=review.user_id%>">
+                              <button class="profile-link" href="/users/<%=review.user_id%>"><%= User.find(review.user_id).username %></button>
+                              <input type="hidden" name="user_id" value=<%= review.user_id %>>
+                            </form></div>
                             <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> <%=review.created_at%></time>
                           </header>
                           <div class="comment-post">
@@ -105,7 +112,10 @@
                       <figure class="thumbnail">
                         <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
                         <figcaption class="text-center">
-                          <a class="profile-link" href="/users/<%=review.user_id%>"><%= User.find(review.user_id).username %></a>
+                          <form class="profile-link" method="post" action="/users/<%=review.user_id%>">
+                          <button class="profile-link" href="/users/<%=review.user_id%>"><%= User.find(review.user_id).username %></button>
+                          <input type="hidden" name="user_id" value=<%= review.user_id %>>
+                        </form>
                         </figcaption>
                       </figure>
                     </div>
@@ -113,7 +123,10 @@
                       <div class="panel panel-default arrow left">
                         <div class="panel-body">
                           <header class="text-left">
-                            <div class="comment-user profile-link"><i class="fa fa-user"></i><a href="/users/<%=review.user_id%>"><%= User.find(review.user_id).username %></a></div>
+                            <div class="comment-user profile-link"><i class="fa fa-user"></i>  <form class="profile-link" method="post" action="/users/<%=review.user_id%>">
+                              <button class="profile-link" href="/users/<%=review.user_id%>"><%= User.find(review.user_id).username %></button>
+                              <input type="hidden" name="user_id" value=<%= review.user_id %>>
+                            </form></div>
                             <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> <%=review.created_at%></time>
                           </header>
                           <div class="comment-post">
