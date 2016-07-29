@@ -10,9 +10,5 @@ end
 
 get '/users/:user_id' do
 	@user = User.find(params[:user_id])
-	if @user == current_user
-		redirect '/profile'
-	else
-		erb :'users/index'
-	end
+	erb :'users/index'
 end

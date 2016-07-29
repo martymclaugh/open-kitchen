@@ -1,10 +1,11 @@
+<div class="lead">
 <h3><%= @restaurant.restaurant_name %></h3>
 <p><%= @restaurant.phone %></p>
 <p><%= @restaurant.address %></p>
 <p><%= @restaurant.city %></p>
 <p><%= @restaurant.state %></p>
 <p><%= @restaurant.yelp_reviews %></p>
-
+</div>
  <!-- <form method="post" action="/restaurants/:id/reviews/">
    <input type="text" name="tite" placeholder="title"><br>
    <textarea type="text" name="content" placeholder="content"></textarea><br>
@@ -12,7 +13,7 @@
    <input type="radio" name="value" value="customer"> Customer<br>
    <button type="submit">submit</button><br>
  </form> -->
-<a id="review-link" href="#" class="btn btn-primary btn-lg"> Leave a Review </a>
+<button id="review-link" href="#" class="btn btn-primary btn-lg"> Leave a Review </button>
 <div id="review-form-div" style="display: none; align:right;">
 <h4>Leave a Review</h4>
  <form class="form-verticle" id="review-form" role="form" method="post" action="/restaurants/:id/reviews/">
@@ -41,31 +42,97 @@
 </div>
 <div id="review-links">
   <ul class="nav nav-tabs nav-justified">
-    <li><a href="#" id="employee-review-link">Employee Reviews</a></li>
-    <li><a href="#" id="customer-review-link">Customer Reviews</a></li>
+    <li><a href="#" id="employee-review-link">Employee Reviews < <%= p  @restaurant.reviews.where("value = 'employee'").count %> > </a></li>
+    <li><a href="#" id="customer-review-link">Customer Reviews < <%= @restaurant.reviews.where("value = 'customer'").count %> > </a></li>
   </ul>
 </div>
 
-<div id="employee-reviews" style="display: none;">
-  <div id="employee-reviews">
-    <h2>Employee Reviews:</h2>
-      <% @restaurant.reviews.each do |review| %>
-        <% if review.value == 'employee' %>
-          <%= review.title %>
-          <%= review.content %>
-          <i><%= User.find(review.user_id).username %></i>
-        <% end %>
-      <% end %>
-  </div>
-</div>
 
-<div id="customer-reviews" style="display: none;">
-  <h2>Customer Reviews:</h2>
-    <% @restaurant.reviews.each do |review| %>
+
+<div id="review-area">
+  <div id="customer-reviews" style="display: none;">
+    <% @restaurant.reviews.order('created_at DESC').each do |review| %>
       <% if review.value == 'customer' %>
-        <%= review.title %>
-        <%= review.content %>
-        <i><%= User.find(review.user_id).username %></i>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8">
+                <section class="comment-list">
+                  <article class="row">
+                    <div class="col-md-2 col-sm-2 hidden-xs">
+                      <figure class="thumbnail">
+                        <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                        <figcaption class="text-center">
+                          <a href="/users/'<%=review.user_id%>'"><%= User.find(review.user_id).username %></a>
+                          </figcaption>
+                      </figure>
+                    </div>
+                    <div class="col-md-10 col-sm-10">
+                      <div class="panel panel-default arrow left">
+                        <div class="panel-body">
+                          <header class="text-left">
+                            <div class="comment-user"><i class="fa fa-user"></i> <a href="/users/<%=review.user_id%>"><%= User.find(review.user_id).username %></a></div>
+                            <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> <%=review.created_at%></time>
+                          </header>
+                          <div class="comment-post">
+                            <b>
+                              <%= review.title %>
+                            </b>
+                            <p>
+                              <%= review.content %>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                </section>
+            </div>
+          </div>
+        </div>
       <% end %>
     <% end %>
+  </div>
+
+  <div id="employee-reviews" style="display: none;">
+    <% @restaurant.reviews.order('created_at DESC').each do |review| %>
+      <% if review.value == 'employee' %>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8">
+                <section class="comment-list">
+                  <article class="row">
+                    <div class="col-md-2 col-sm-2 hidden-xs">
+                      <figure class="thumbnail">
+                        <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                        <figcaption class="text-center">
+                          <a href="/users/<%=review.user_id%>"><%= User.find(review.user_id).username %></a>
+                        </figcaption>
+                      </figure>
+                    </div>
+                    <div class="col-md-10 col-sm-10">
+                      <div class="panel panel-default arrow left">
+                        <div class="panel-body">
+                          <header class="text-left">
+                            <div class="comment-user"><i class="fa fa-user"></i><a href="/users/<%=review.user_id%>"><%= User.find(review.user_id).username %></a></div>
+                            <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> <%=review.created_at%></time>
+                          </header>
+                          <div class="comment-post">
+                            <b>
+                              <%= review.title %>
+                            </b>
+                            <p>
+                              <%= review.content %>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                </section>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 </div>

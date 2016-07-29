@@ -1,17 +1,7 @@
 $(document).ready(function() {
-  // This is called after the document has loaded in its entirety
-  // This guarantees that any elements we bind to will exist on the page
-  // when we try to bind to them
   addSearchDivs();
   createRestaurant();
   searchBar();
-  displayCustomerReviews();
-  displayEmployeeReviews();
-  showReviewForm();
-  submitReview();
-  autoButtonDown();
-  cancelReview();
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
 });
 // preform search function
 searchBar = function(){
@@ -49,8 +39,6 @@ addSearchDivs = function(){
     .done(function(response){
       $('body').append().html(response)
     })
-    .fail(function(response){
-    });
   });
 };
 
@@ -74,6 +62,10 @@ createRestaurant = function(){
       $('#search-results').empty();
       $('#create-restaurant').empty();
       $('body').append(response);
+      displayCustomerReviews();
+      displayEmployeeReviews();
+      showReviewForm();
+      autoButtonDown();
     })
   })
 };
@@ -98,7 +90,10 @@ showReviewForm = function(){
   $('#review-link').on('click', function(event){
     event.preventDefault();
     $('#review-form-div').show();
+    $('#review-form')[0].reset();
     $('#review-link').hide();
+    cancelReview();
+    submitReview();
   })
 }
 
@@ -114,6 +109,8 @@ submitReview = function(){
   .done(function(response){
     $('#review-form-div').hide();
     $('#review-link').show();
+    console.log(response);
+    $('#review-area').prepend(response);
   })
   })
 }
@@ -125,6 +122,7 @@ cancelReview = function(){
   $('#review-link').show();
   })
 }
+
 autoButtonDown = function() {
     $('#employee-review-link').click();
 }
