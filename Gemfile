@@ -15,7 +15,6 @@ gem 'rake'
 gem 'shotgun'
 gem 'bcrypt'
 gem 'yelp'
-gem 'dotenv'
 
 group :test do
   gem 'shoulda-matchers'
@@ -25,6 +24,7 @@ group :test do
 end
 
 group :test, :development do
+  gem 'dotenv'
   gem 'factory_girl'
   gem 'faker'
   gem 'pry'
