@@ -4,7 +4,6 @@ $(document).ready(function() {
   searchBar();
   showProfile();
   showRestaurantProfile();
-
 });
 // preform search function
 searchBar = function(){

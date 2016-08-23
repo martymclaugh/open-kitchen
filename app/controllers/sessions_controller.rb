@@ -6,7 +6,6 @@ post '/register' do
     end
   else
     @register_error = "*Passwords don't match"
-    p @register_error
     erb :index
   end
 end
@@ -18,7 +17,6 @@ end
 
 post '/login' do
   user = User.authenticate(params[:username], params[:password])
-
   if user
     login(user)
     redirect '/'
